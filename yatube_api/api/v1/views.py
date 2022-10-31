@@ -1,4 +1,3 @@
-from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
 from posts.models import Comment, Follow, Group, Post
 from rest_framework import filters, mixins, viewsets
@@ -10,10 +9,9 @@ from .permissions import IsAuthorOrReadOnly
 from .serializers import (CommentSerializer, FollowSerializer, GroupSerializer,
                           PostSerializer)
 
-User = get_user_model()
-
 
 class PostViewSet(viewsets.ModelViewSet):
+    """Класс для работы модели POST для операций CRUD"""
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     pagination_class = LimitOffsetPagination
@@ -25,12 +23,14 @@ class PostViewSet(viewsets.ModelViewSet):
 
 class GroupViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
                    viewsets.GenericViewSet):
+    """Класс для работы модели Group для операций CRUD"""
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
 
 
 class CommentViewSet(viewsets.ModelViewSet):
+    """Класс для работы модели Comment для операций CRUD"""
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
     permission_classes = [IsAuthenticatedOrReadOnly, IsAuthorOrReadOnly]
@@ -46,6 +46,7 @@ class CommentViewSet(viewsets.ModelViewSet):
 
 class FollowViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
                     mixins.CreateModelMixin, viewsets.GenericViewSet):
+    """Класс для работы модели Follow для операций CRUD"""
     queryset = Follow.objects.all()
     serializer_class = FollowSerializer
     permission_classes = [IsAuthenticated]

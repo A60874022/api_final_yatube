@@ -3,6 +3,7 @@ from rest_framework import serializers
 
 
 class PostSerializer(serializers.ModelSerializer):
+    """"Класс ввода/вывода данных в заданном формате для модели Post"""
     author = serializers.SlugRelatedField(read_only=True,
                                           slug_field='username')
 
@@ -12,6 +13,7 @@ class PostSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
+    """Класс ввода/вывода данных в заданном формате для модели Comment"""
     author = serializers.SlugRelatedField(
         read_only=True, slug_field='username'
     )
@@ -22,12 +24,14 @@ class CommentSerializer(serializers.ModelSerializer):
 
 
 class GroupSerializer(serializers.ModelSerializer):
+    """Класс ввода/вывода данных в заданном формате для модели Group"""
     class Meta:
         fields = ('title', 'slug', 'description')
         model = Group
 
 
 class FollowSerializer(serializers.ModelSerializer):
+    """Класс ввода/вывода данных в заданном формате для модели Follow"""
     user = serializers.SlugRelatedField(
         queryset=User.objects.all(),
         slug_field='username',
